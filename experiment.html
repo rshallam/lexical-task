@@ -144,10 +144,22 @@
       }
     });
   }
+  var fixation = {
+    type: 'single-stim',
+    stimulus: '<div style="display: flex; justify-content: center; align-items: center; height: 90vh;"><div style="font-size:40px;">+</div></div>',
+    choices: 'none',
+    timing_response: 1600,
+    timing_post_trial: 0,
+    trial_duration: 1600,
+    is_html: true,
+  }
 
   var all_practise_trials = practise_words_trials.concat(practise_non_words_trials);
   all_practise_trials = jsPsych.randomization.shuffle(all_practise_trials);
-  timeline = timeline.concat(all_practise_trials);
+  // Add fixation cross before each trial
+  all_practise_trials_fixation = [].concat(...all_practise_trials.map(e => [fixation,e]))
+
+  timeline = timeline.concat(all_practise_trials_fixation);
 
 
   /* instructions before experiment*/
@@ -215,7 +227,10 @@
 
   var all_trials = low_frequency_trials.concat(high_frequency_trials, nonword_trials);
   all_trials = jsPsych.randomization.shuffle(all_trials);
-  timeline = timeline.concat(all_trials);
+  // Add fixation cross before each trial
+  all_trials_fixation = [].concat(...all_trials.map(e => [fixation,e]))
+  
+  timeline = timeline.concat(all_trials_fixation);
   /* show summary data */
 
   function compute_mean_RTs(data) {
