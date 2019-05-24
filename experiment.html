@@ -152,6 +152,9 @@
     timing_post_trial: 0,
     trial_duration: 1600,
     is_html: true,
+    data: {
+      word_type: 'practise',
+    }
   }
 
   var all_practise_trials = practise_words_trials.concat(practise_non_words_trials);
@@ -229,7 +232,7 @@
   all_trials = jsPsych.randomization.shuffle(all_trials);
   // Add fixation cross before each trial
   all_trials_fixation = [].concat(...all_trials.map(e => [fixation,e]))
-  
+
   timeline = timeline.concat(all_trials_fixation);
   /* show summary data */
 
