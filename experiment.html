@@ -26,17 +26,22 @@
 
   <script>
   /* experiment parameters */
-  var max_response_time = 2500;
-  var post_trial_gap = 1600;
+  var max_response_time = 3000;
+  var post_trial_gap = 0;
 
-  var practise_words = ['എന്നാല്‍', 'ചെയ്യുന്നത്', 'ജില്ലയിലെ', 'വേനൽക്കാലത്തും', 'കാണാത്തതിനാല്‍']
-  var practise_non_words = ['പരതശവീലം', 'കിച്ചകരം', 'മസന്ധജാകം', 'തുവിപ്പിൽ', 'പ്രാഗ്യങ്ങതകൾ']
+  var practise_words = ['എന്നാല്‍']//, 'ചെയ്യുന്നത്', 'ജില്ലയിലെ', 'വേനൽക്കാലത്തും', 'കാണാത്തതിനാല്‍'];
 
-  var high_frequency_words = [' ആദ്യമായി ' , ' ഇന്ത്യന്‍ ' , ' തിരുവനന്തപുരം ' , 'തുടർന്ന്' , ' കിലോമീറ്റര്‍ ' , ' കോഴിക്കോട് ' , ' ആയിരുന്നു ' , ' ചെയ്യുന്നു ' , ' അമേരിക്കന്‍ ' , ' തുടർന്ന് ' , ' ആദ്യത്തെ ' , ' പ്രത്യേക ' , ' തുടങ്ങിയ ' , ' കേരളത്തില്‍ ' , ' ചെയ്യുന്ന ']
+  var practise_non_words = ['പരതശവീലം']//, 'കിച്ചകരം', 'മസന്ധജാകം', 'തുവിപ്പിൽ', 'പ്രാഗ്യങ്ങതകൾ']
 
-  var low_frequency_words = ['വാഴയിലയില്‍ ' , ' അവസരങ്ങളിലും ' , ' ഭജനമിരിക്കല്‍ ' , ' സമൂഹത്തിനു ' , ' റിലീസായി ' , ' ഇതുംകൂടി ' , ' പിടിക്കാനും ' , ' മുസ്ലീങ്ങൾക്ക് ' , ' ഹരിദാസിന്റെ ' , ' റെവല്യൂഷണ്‍ ' , ' ചൊല്ലുതന്നെ ' , ' ഗിയോവന്നി ' , ' കുടിക്കുന്നതും ' , ' എനിക്കറിയാം ' , ' യോജിക്കുന്ന '] //
+  var high_frequency_words = ['പ്രത്യേക','തുടർന്ന്','ആയിരുന്നു','ആദ്യമായി','തുടങ്ങിയ']//,'ആദ്യത്തെ','വിളിക്കുന്നു','സംവിധാനം','എന്നാല്‍','കാണപ്പെടുന്നു','തുടങ്ങിയത്','പറയുന്നു','പിന്നീട്','അന്തരിച്ചു','ഉപയോഗിക്കുന്നു','കൂടുതല്‍','വിവരങ്ങള്‍','ഇപ്പോള്‍','മരുമക്കള്‍','ചെയ്യുന്നു','അദ്ദേഹത്തിന്റെ','നിർമ്മാണം','അന്താരാഷ്ട്ര','കേരളത്തില്‍','ജനങ്ങള്‍'];
 
-  var nonwords = ['കൊളുമടം', 'ജയമദരിൽ', 'ഭൊക്കൂർ', 'വരദത്തിനേക്കി', 'പക്ഷഖടനം', 'പൂട്ടക്തിലും', 'സ്വീധങ്ങളിൽ', 'ലക്കടാനത്തത്', 'ബ്രീയല്ലം', 'ജോചികേണ്ട', 'തഞ്ചുഡഗം', 'ഗജിതമായില്ല', 'തണ്ടൂരായപ്പോൾ', 'സിപ്ലിത്തരം', 'ചൈകതിന്റെ', 'ധമ്പിപവകയുടെ', 'ജഢണതുട', 'കമ്മുണ്ണിതം', 'യോതന്തര്യം', 'ഗരൂഢനങ്കിലും', 'സമീപച്ചാരകം', 'തെന്നക്ഷിലും' ,'ഗരൂരസംവിദം', 'അങ്കകനകൾ', 'മഘത്രശാലകൽ', 'ഇഗ്രതളം', 'പ്രാജതിന്', 'സ്പൂഭമായ', 'വിമടത്തി', 'ബല്ലിദ്രൂവം']
+  var low_frequency_words = ['സംഘത്തെയും','മിഷണറിമാരില്‍','ഒഫീഷ്യല്‍','അംഗവാക്യം','പാറകളാണ്‌']//,'സംക്ഷേപണം','സമതലങ്ങളില്‍','മണ്ഡപങ്ങള്‍','യോജിച്ചു','രാസവസ്തുവിന്റെ','പ്രചാരണരംഗത്ത്','കാണക്കാരന്‍','നദിയിലൂടെ','താമരാക്ഷന്‍','പേരിനുമാത്രം','മെത്രാന്മാരും','സംഗതികളും','പണ്ഡിതരായ','അപേക്ഷിക്കാന്‍','അങ്ങിങ്ങ്','ആരോഗ്യനില','ശാഖകളിലും','വാക്കിൻറെ','ആരാധിക്കുന്നത്','സ്ഥാപനത്തിന്‌'];
+
+  var nonwords = ['കൊളുമടം', 'ജയമദരിൽ', 'ഭൊക്കൂർ', 'വരദത്തിനേക്കി', 'പക്ഷഖടനം']//, 'പൂട്ടക്തിലും', 'സ്വീധങ്ങളിൽ', 'ലക്കടാനത്തത്', 'ബ്രീയല്ലം', 'ജോചികേണ്ട', 'തഞ്ചുഡഗം', 'ഗജിതമായില്ല', 'തണ്ടൂരായപ്പോൾ', 'സിപ്ലിത്തരം', 'ചൈകതിന്റെ', 'ധമ്പിപവകയുടെ', 'ജഢണതുട', 'കമ്മുണ്ണിതം', 'യോതന്തര്യം', 'ഗരൂഢനങ്കിലും', 'സമീപച്ചാരകം', 'തെന്നക്ഷിലും' ,'ഗരൂരസംവിദം', 'അങ്കകനകൾ', 'മഘത്രശാലകൽ', 'ഇഗ്രതളം', 'പ്രാജതിന്', 'സ്പൂഭമായ', 'വിമടത്തി', 'ബല്ലിദ്രൂവം', 'എന്നതാരമുടെ', 'വഴച്ചടത്തി', 'മൗജങ്ങതീർ', 'പെസിട്ടാക്കാം', 'ദിക്കസംഭോതം', 'വേയിമ്പിൽ', 'സുക്രീതത്ത്വം', 'ഗോഹിദം', 'സ്ഥാവന്റെത്', 'ക്ഷോതിച്ചു', 'കായജൂർ', 'സംഭിക്തവകൽ', 'താഖഘടനം', 'കുപ്രങ്ങളിലെ', 'സമീതക്രമം', 'ഗാദ്രമായ', 'ജേയിദതം', 'ആനീഗരണം', 'അവിച്ചതിന്റെ', 'കർച്ചികാരം'];
+
+  console.log(high_frequency_words.length);
+  console.log(low_frequency_words.length);
+  console.log(nonwords.length);
 
   // generate a random subject ID
   var subject_id = Math.floor(Math.random()*100000);
@@ -55,7 +60,9 @@
     type: "text",
     text: ["<p class='center-content'><u> <strong>Malayalam Experiment</strong></u></p>" +
     "<div class='center-content'><img src='img/welcome1.jpg'></img>" +
-    "<p class='small'><strong>Press any key to begin</strong></p></div>"
+    "<p class='small'><strong>Press any key to begin</strong></p>" +
+    "<p class='small'><strong>ആരംഭിക്കാൻ ഏതെങ്കിലും കീ അമർത്തുക</strong></p>" +
+    "</div>"
     ],
     timing_post_trial: 1000,
   };
@@ -65,7 +72,8 @@
   /* instructions */
   var instructions = {
     type: 'instructions',
-    pages: ['<p style="font-weight:bold;"> Informed consent </p>' + '<p> I hereby acknowledge that I agree to participate in an empirical study on language processing. I have been informed about the planned study, and that I have understood the content of this information, have no issues with recording of data during the planned experiment; I also have no issues with this data being used anonymously for future research purposes. My participation in this study is voluntary. I know that I can at any time cancel my participation from the study without any difficulty. I am aware that I can withdraw this consent at any time.</p>' + '<p> If you wish to participate, you must CLICK next button in order to agree to participate in this study. </p>'
+    pages: [
+      '<p style="font-weight:bold;"> Informed consent </p>' + '<p> I hereby acknowledge that I agree to participate in an empirical study on language processing. I have been informed about the planned study, and that I have understood the content of this information, have no issues with recording of data during the planned experiment; I also have no issues with this data being used anonymously for future research purposes. My participation in this study is voluntary. I know that I can at any time cancel my participation from the study without any difficulty. I am aware that I can withdraw this consent at any time.</p>' + '<p> If you wish to participate, you must CLICK next button in order to agree to participate in this study. </p><p style="font-weight:bold;"> അറിവോടെയുള്ള സമ്മതം </p>' + '<p> ഭാഷ പരീക്ഷണത്തിൽ പങ്കെടുക്കാൻ സമ്മതിക്കുന്നത് ഞാൻ അംഗീകരിക്കുന്നു. പരീക്ഷണത്തെക്കുറിച്ചുള്ള വിവരങ്ങൾ ഞാൻ മനസ്സിലാക്കുകയും, ഡാറ്റ റെക്കോർഡുചെയ്യുന്നതിൽ പ്രശ്‌നമില്ലെന്നും ഞാൻ അംഗീകരിക്കുന്നു. ഭാവിയിലെ ഗവേഷണ ആവശ്യങ്ങൾക്കായി ഈ ഡാറ്റ അജ്ഞാതമായി ഉപയോഗിക്കുന്നതിൽ എനിക്ക് പ്രശ്‌നങ്ങളൊന്നുമില്ല. ഈ പഠനത്തിലെ എന്റെ പങ്കാളിത്തം സ്വമേധയാ ഉള്ളതാണ്. എപ്പോൾ വേണമെങ്കിലും പഠനത്തിൽ നിന്നുള്ള പങ്കാളിത്തം ഒരു ബുദ്ധിമുട്ടും കൂടാതെ നിർത്താൻ കഴിയുമെന്ന് എനിക്കറിയാം. എനിക്ക് എപ്പോൾ വേണമെങ്കിലും ഈ സമ്മതം പിൻവലിക്കാൻ കഴിയുമെന്ന് എനിക്കറിയാം. </p>' + '<p> പങ്കെടുക്കാൻ താൽപ്പര്യമുണ്ടെങ്കിൽ, സമ്മതം നൽകാൻ "Next" ബട്ടൺ ക്ലിക്കുചെയ്യണം. </p>'
     ],
     allow_keys: false,
     show_clickable_nav: true
@@ -80,7 +88,8 @@
     "Age",
     "Gender (M/F)",
     "Are you a native speaker- Yes or No",
-    "Have you received schooling in Malayalam and if so upto what grade"
+    "Have you received schooling in Malayalam and if so upto what grade",
+    "Do you read books, articles, newspapers, etc. in Malayalam?"
   ],
   };
   timeline.push(survey_trial);
@@ -96,16 +105,26 @@
       '<p>In case of no response, you will see the next word automatically.</p> ' +
       '<p>Try not to say the word aloud as you read. </p>' +
       '<p class="center-content" style="font-weight:bold;">Press A if the word is a Malayalam word.</p>' +
-      '<p class="center-content" style="font-weight:bold;">Press L if the word is a non-Malayalam word.</p>',
-      '<p>For example:</p>' +
-      "<div class='left center-content'><img src='img/word.png'></img>" +
-      "<p class='small'><strong>Malayalam Word: Press the A key</strong></p></div>" +
+      '<p class="center-content" style="font-weight:bold;">Press L if the word is a non-Malayalam word.</p>' +
+      '<p> നിർദ്ദേശങ്ങൾ ശ്രദ്ധാപൂർവ്വം വായിക്കുക</p>' +
+          '<p>നിങ്ങൾ വാക്കുകൾ കാണാൻ പോകുന്നു. അവയിൽ ചിലത് യഥാർത്ഥ മലയാള പദങ്ങളാണ്. മറ്റുള്ളവ മലയാള വാക്കുകൾ പോലെ തോന്നുന്ന അസംബന്ധ പദങ്ങളാണ്. ഈ വാക്ക് യഥാർത്ഥ മലയാളമാണോ എന്ന് സൂചിപ്പിക്കുക എന്നതാണ് നിങ്ങൾ ചെയ്യേണ്ടത്.</p>' +
+        '<p>പ്രതികരണമില്ലെങ്കിൽ, കുറച്ച് സമയത്തിന് ശേഷം അടുത്ത വാക്ക് നിങ്ങൾ കാണും.</p> ' +
+        '<p>നിങ്ങൾ വായിക്കുമ്പോൾ വാക്ക് ഉറക്കെ പറയാതിരിക്കാൻ ശ്രമിക്കുക.</p>' +
+        '<p class="center-content" style="font-weight:bold;">മലയാളം പദമാണെങ്കിൽ A അമർത്തുക.</p>' +
+        '<p class="center-content" style="font-weight:bold;">ഈ വാക്ക് മലയാള പദമല്ലെങ്കിൽ L അമർത്തുക.</p>',
+        '<p>For example:</p>' +
+        "<div class='left center-content'><img src='img/word.png'></img>" +
+        "<p class='small'><strong>Malayalam Word: Press the A key</strong></p>" + "<p class='small'><strong>മലയാളം പദമാണ്ം: A അമർത്തുക</strong></p>" + "</div>" +
       "<div class='right center-content'><img src='img/nonword.png'></img>" +
-      "<p class='small'><strong>Non-Malayalam Word: Press the L key</strong></p></div>",
+      "<p class='small'><strong>Non-Malayalam Word: Press the L key</strong></p>" +
+      "<p class='small'><strong>മലയാളം പദമല്ല: L അമർത്തുക</strong></p></div>",
     "<p class='center-content'><u> <strong>Practise - Ready?</strong></u></p>" +
   "<p class='center-content'>A practise phase will begin now. You will not be able to take a break from your seat.</p></div>" +
   "<p class='center-content'>Place your hands on the 'a' and 'l' keys to make the response easier.</p></div>" +
-  "<p class='center-content'><strong>If you are ready, click 'Next' to begin.</strong></p></div>"
+  "<p class='center-content'><strong>If you are ready, click 'Next' to begin.</strong></p></div>" +
+  "<p class='center-content'>പരിശീലനം ഇപ്പോൾ ആരംഭിക്കും. ഇപ്പോൾ മുതൽ നിങ്ങൾക്ക് ഒരു ഇടവേള എടുക്കാൻ കഴിയില്ല.</p></div>" +
+  "<p class='center-content'>പ്രതികരണം എളുപ്പമാക്കുന്നതിന് 'A', 'L' കീകളിൽ കൈ വയ്ക്കുക.</p></div>" +
+  "<p class='center-content'><strong>തയ്യാറാണെങ്കിൽ, ആരംഭിക്കാൻ 'Next' ക്ലിക്കുചെയ്യുക.</strong></p></div>"
 
     ],
     allow_backward: false,
@@ -144,6 +163,7 @@
       }
     });
   }
+
   var fixation = {
     type: 'single-stim',
     stimulus: '<div style="display: flex; justify-content: center; align-items: center; height: 90vh;"><div style="font-size:40px;">+</div></div>',
@@ -165,6 +185,9 @@
   timeline = timeline.concat(all_practise_trials_fixation);
 
 
+
+  // result = all_practise_trials.reduce((r, a) => r.concat(a, 0), [0]);
+
   /* instructions before experiment*/
   var instructions = {
     type: 'instructions',
@@ -172,7 +195,10 @@
     "<p class='center-content'><u> <strong>Ready?</strong></u></p>" +
   "<p class='center-content'>The real experiment will begin now. You will not be able to take a break from your seat.</p></div>" +
   "<p class='center-content'>Place your hands on the 'a' and 'l' keys to make the response easier.</p></div>" +
-  "<p class='center-content'><strong>If you are ready, click 'Next' to begin</strong></p></div>"
+  "<p class='center-content'><strong>If you are ready, click 'Next' to begin</strong></p></div>" +
+  "<p class='center-content'>യഥാർത്ഥ പരീക്ഷണം ഇപ്പോൾ ആരംഭിക്കും. ഇപ്പോൾ മുതൽ നിങ്ങൾക്ക് ഒരു ഇടവേള എടുക്കാൻ കഴിയില്ല.</p></div>" +
+  "<p class='center-content'>പ്രതികരണം എളുപ്പമാക്കുന്നതിന് 'A', 'L' കീകളിൽ കൈ വയ്ക്കുക.</p></div>" +
+  "<p class='center-content'><strong>തയ്യാറാണെങ്കിൽ, ആരംഭിക്കാൻ 'Next' ക്ലിക്കുചെയ്യുക.</strong></p></div>"
     ],
     allow_backward: false,
     allow_keys: false,
@@ -292,11 +318,15 @@
       var rt_data = compute_mean_RTs(jsPsych.data.getData());
       var message = "<p class='center-content'>Yay! Congratulations. You completed the experiment! </p>" +
        "<p class='center-content' style='font-weight:bold;'> You responded correctly on " + rt_data.accuracy + "% of the trials. </p>" +
-        "<p class='center-content'>Your average response time for " + "high frequency Malayalam words was " + Math.floor(rt_data.high) + "ms.</p>" +
-        "<p class='center-content'>Your average response time for low frequency Malayalam words was " + Math.floor(rt_data.low) + "ms.</p>" +
-        "<p class='center-content'>Your average response time for non-Malayalam words " + " was " + Math.floor(rt_data.nonword) + "ms.</p><br>" +
+  //      "<p class='center-content'>Your average response time for " + "high frequency Malayalam words was " + Math.floor(rt_data.high) + "ms.</p>" +
+  //      "<p class='center-content'>Your average response time for low frequency Malayalam words was " + Math.floor(rt_data.low) + "ms.</p>" +
+  //      "<p class='center-content'>Your average response time for non-Malayalam words " + " was " + Math.floor(rt_data.nonword) + "ms.</p><br>" +
         "<p class='center-content' style='font-weight:bold;'> Please press any KEY to exit the experiment. </p><br>"+
-        "<div class='center-content'><img src='img/thankyou.png'></img>";
+        "<div class='center-content'><img src='img/thankyou.png'></img>" +
+        "<p class='center-content'>കോൺഗ്രാറ്റ്ലഷൻസ്, നിങ്ങൾ പരീക്ഷണം പൂർത്തിയാക്കി</p>" +
+         "<p class='center-content' style='font-weight:bold;'> നിങ്ങൾ " + rt_data.accuracy + "% ശരിയായിയാണ് പ്രതികരിച്ചത്. </p>" +
+         "<p class='center-content' style='font-weight:bold;'> പരീക്ഷണത്തിൽ നിന്ന് പുറത്തുകടക്കാൻ ദയവായി ഏതെങ്കിലും KEY അമർത്തുക. </p><br>"
+         ;
 
       return message;
     }
@@ -329,6 +359,7 @@
       timeline: timeline,
       on_finish: function() {
         postDataRequest();
+        console.log(jsPsych.data.getData());
         // jsPsych.data.displayData();
 
       },
